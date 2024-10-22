@@ -3,12 +3,12 @@ using namespace std;
 
 void addNewNode(int value);
 
-class Node{
+template<typename T> class Node{
     public:
-    int value;
+    T value;
     Node* next;
 
-    //Default constructor for node
+    //Default constr>uctor for node
     Node() {
         value = 0;
         next = NULL;
@@ -21,19 +21,24 @@ class Node{
     }
 };
 
-class LL {
+template<typename T> class LL {
     Node* headNode;
+    Node* tailNode;
 
     public:
 
     LL() {
         //default constrctor for headNode.
         headNode = NULL;
+        tailNode = NULL;
     }
+    T() {
+        
+    };
 
-    ~LL();
+    template<typename T> ~LL();
 
-    bool isEmpty() { 
+    template<typname T> bool isEmpty() { 
         if(headNode == NULL) {
             cout << "There are no contacts in your Phonebook!" << endl;
             return true;
@@ -43,34 +48,57 @@ class LL {
         }
     }
 
-    //Function to add a new node.
-    void addNewNode(int value) {
+    //Function to add a new node to the list.
+    template<typename T> void addNewNode(T value) {
         //Setting up new node
-        Node* nn = new Node;
-        Node* nodePtr;
+        Node* nn = new Node; //nn (new node)
 
         nn->value = value;
         nn->next = NULL;
 
-        //Adds note to the front if head is == to null.
+        //Adds note to the front if head is == to null. Set head to nn and also make tail node.
         if (headNode == NULL) {
             headNode = nn;
+            tailNode = nn;
             return;
         }
         else {
-            nodePtr = headNode; //Set nodePtr to headNode to start at the begining of the list.
-            
-            //traversing the list until we find the end.
-            while(nodePtr->next != NULL) {
-                nodePtr = nodePtr->next;
-            }
-            
-            nodePtr->next = nn;
+            //Set tailNode to nn to add at the end of the list.
+            tailNode->next = nn;
+
+            //Set the tail to nn
+            tailNode->next = nn->next;
         }
 
 
     }
 
+    template<typename T>
+    void removeNode(int removeValue) {
+        Node* nodePtr; //To go through the list and and look for the value passed.
+        Node* previousNode; //Pointer to the previous node
+
+        if (headNode == NULL|| !headNode) { 
+            cout << "List is empty. The Droids you are looking for are not here!" << endl;
+            return;
+        }
+
+        if (headNode->value == removeValue) {
+            nodePtr = headNode->next;
+            delete headNode;
+            headNode = nodePtr;
+        }
+
+        else {
+            nodePtr = headNode;
+
+            while (nodePtr!= NULL && nodePtr->value != removeValue) {
+                
+            }
+        }
+    }
+
+    template<typename T>
     void print() {
         Node *nodePtr = headNode;
 
@@ -79,12 +107,14 @@ class LL {
             cout << "Phonebook is empty. Please consider adding contacts or loading one from file." << endl;
         }
         //Go through the list as long as nodePtr is not equal to NULL.
-        while (nodePtr != NULL) {
+        while (nodePtr != tailNode) {
             cout << nodePtr->value << endl;
             nodePtr = nodePtr->next;
         }
             
     }
+
+    template<typename T>
     ~LL() {
         Node* nodePtr;
         Node* nextNode;
