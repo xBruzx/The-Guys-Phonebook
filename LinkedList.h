@@ -73,34 +73,41 @@ template<typename T> class LL {
 
     }
 
-    template<typename T>
+    //template<typename T>
     void removeNode(int removeValue) {
         Node* nodePtr; //To go through the list and and look for the value passed.
         Node* previousNode; //Pointer to the previous node
 
+        //If the list is empty, promt the user no contacts are in the list.
         if (headNode == NULL|| !headNode) { 
             cout << "List is empty. The Droids you are looking for are not here!" << endl;
             return;
         }
 
+        //Search for the value passed to delete the node specified by the user.
         if (headNode->value == removeValue) {
             nodePtr = headNode->next;
             delete headNode;
             headNode = nodePtr;
         }
 
+
         else {
+
+            //make nodePtr head of the list.
             nodePtr = headNode;
 
+            //Make sure we skips nodes that don't have the value that is passed.
             while (nodePtr!= NULL && nodePtr->value != removeValue) {
+                previousNode = nodePtr;
+                nodePtr = nodePtr->next;
                 
             }
         }
     }
 
-    template<typename T>
     void print() {
-        Node *nodePtr = headNode;
+        Node* nodePtr = headNode;
 
         //Check if list is empty if the list is empty it will prompt the user to consider adding contacts to the phone book.
         if(nodePtr == NULL) {
@@ -112,6 +119,46 @@ template<typename T> class LL {
             nodePtr = nodePtr->next;
         }
             
+    }
+
+    template<typename T> void printContact(T value) {
+
+        Node* nodePtr = headNode;
+        Node* previousNode;
+
+        if (headNode == NULL) {
+
+            cout << "Phonebook is empty. Please consider adding contacts" << endl;
+
+        }
+
+        //Search the list for the contact passed through.
+        while (nodePtr != NULL && nodePtr->value != value) {
+            previousNode = nodePtr;
+            nodePtr = nodePtr->next;
+
+            if (nodePtr-value = value) {
+                cout << nodePtr->value << endl;
+            }
+        }
+    }
+
+    int getListLength() {
+        int counter = 0;
+        Node* nodePtr;
+
+        nodePtr = headNode;
+
+        //go through the list of contacts and count each one to get the length of the Phonebook
+        while (!= tailNode) {
+            counter ++
+            nodePtr = nodePtr->next;
+            if (nodePtr == tail) {
+                counter++
+            }
+        }
+
+        return counter;
     }
 
     template<typename T>
