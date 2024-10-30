@@ -1,7 +1,7 @@
 #ifndef CONTACT_H
 #define CONTACT_H
 
-//Finsihed
+//Finsihed contacts.
 
 #include <iostream>
 #include <string>

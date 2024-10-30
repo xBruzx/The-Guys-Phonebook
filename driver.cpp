@@ -19,7 +19,7 @@ int main()
     loadContacts("phonebook.txt", &contactList);
 
     //sort phonebook in alphabetical order by last name
-
+    contactList.insertionSort();
     //loop to go through the program 
     do {
 
@@ -56,6 +56,7 @@ int main()
                     //add contact
                     addContact(&contactList);
                     //resort phonebook
+                    contactList.insertionSort();
                     break;
 
             case 3:
