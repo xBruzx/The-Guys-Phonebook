@@ -8,14 +8,14 @@ template<typename N> class Node{
     N value;
     Node* next;
 
-    //Default constr>uctor for node
+    //Default constructor for node
     Node() {
-        value = 0;
+        N value;
         next = NULL;
     }
 
     //Parameters for constructor
-    Node(int value) {
+    Node(N value) {
         this->value = value;
         this->next = NULL;
     }
@@ -59,12 +59,11 @@ template<typename LI> class LL {
     int getListLength();
     void addNewNode(LI);
     void printContact(int);
-    void insertNode(int, int);
+    void insertNode(int, Node<LI>*);
     Node<LI>* getNodeValue(int);
     void insertionSort();
 
-    //template<typename T>
-    void removeNode(int removeValue) {
+    void removeNode(Node<LI>* nodePackage) {
         Node<LI>* nodePtr; //To go through the list and and look for the value passed.
         Node<LI>* previousNode; //Pointer to the previous node
 
@@ -75,7 +74,7 @@ template<typename LI> class LL {
         }
 
         //Search for the value passed to delete the node specified by the user.
-        if (headNode->value == removeValue) {
+        if (headNode == nodePackage) {
             nodePtr = headNode->next;
             delete headNode;
             headNode = nodePtr;
@@ -88,8 +87,10 @@ template<typename LI> class LL {
             nodePtr = headNode;
 
             //Make sure we skips nodes that don't have the value that is passed.
-            while (nodePtr!= NULL && nodePtr->value != removeValue) {
+            while (nodePtr!= NULL && nodePtr != nodePackage) {
                 previousNode = nodePtr;
+                
+                //Move to next node
                 nodePtr = nodePtr->next;
                 
             }
@@ -103,10 +104,15 @@ template<typename LI> class LL {
         if(nodePtr == NULL) {
             cout << "Phonebook is empty. Please consider adding contacts or loading one from file." << endl;
         }
-        //Go through the list as long as nodePtr is not equal to NULL.
-        while (nodePtr != tailNode) {
-            cout << nodePtr->value << endl;
-            nodePtr = nodePtr->next;
+
+        if (nodePtr != NULL) {
+            //Go through the list as long as nodePtr is not equal to NULL.
+            while (nodePtr != NULL) {
+                //Outputs list of contacts
+                cout << nodePtr->value << endl;
+                //Move to next node.
+                nodePtr = nodePtr->next;
+            }
         }
             
     }
@@ -142,14 +148,13 @@ void LL<LI>::addNewNode(LI value) {
     if (headNode == NULL) {
         headNode = nn;
         tailNode = nn;
-        return;
     }
     else {
-        //Set tailNode to nn to add at the end of the list.
+        //Set current tailNode next node to nn to add at the end of the list.
         tailNode->next = nn;
 
         //Set the tail to nn
-        tailNode->next = nn;
+        tailNode = nn;
     }
 
 
@@ -176,10 +181,9 @@ int LL<LI>::getListLength() {
 
 //function to print the contact information of the value given in the phonebook, and not the whole list.
 template <typename LI>
-void LL<LI>::printContact(int value) {
+void LL<LI>::printContact(int it) {
 
-    Node<LI>* nodePtr = headNode;
-    Node<LI>* previousNode;
+    Node<LI>* nodePackage = getNodeValue(it);
 
     if (headNode == NULL) {
 
@@ -187,33 +191,34 @@ void LL<LI>::printContact(int value) {
         return;
     }
 
-    //Search the list for the contact passed through.
-    while (nodePtr != NULL && nodePtr->value != value) {
-        previousNode = nodePtr;
-        nodePtr = nodePtr->next;
+    Node<LI>* nodePtr = headNode;
 
-        if (nodePtr->value == value) {
-                cout << nodePtr->value << endl;
+    //Search the list for the contact passed through.
+    while (nodePtr != NULL) {
+        if (nodePtr->value == nodePackage->value) {
+            cout << nodePackage->value << endl;
+            return;
         }
+        
+        nodePtr = nodePtr->next;
     }
 }
 
 template <typename LI>
 Node<LI>* LL<LI>::getNodeValue(int pos) {
-    LL<LI> *nodePtr;
+    Node<LI>* nodePtr;
 
-    //If the list is empty, we return -1.
+    //If the list is empty, we return NULL.
     if(!headNode) {
         cout << "Empty list please add some contacts to the phonebook." << endl;
-        return -1;
+        return NULL;
     }
 
     else {
         //If we pass 0 then we just show the head value.
         if(pos == 0) {
-            return headNode->value;
+            return headNode;
     }
-
         nodePtr = headNode;
         int currentPos = 0; //temp value to keep track of where we are in the list.
         //loop through the list to find the position we passed through.
@@ -221,7 +226,8 @@ Node<LI>* LL<LI>::getNodeValue(int pos) {
 
         //If we find the position return the value of the nodePtr.
         if(pos == currentPos) {
-            return nodePtr->value;
+
+            return nodePtr;
         }
 
         //if we do not find the position then we increment and check again.
@@ -231,16 +237,18 @@ Node<LI>* LL<LI>::getNodeValue(int pos) {
         }
     }
 
+    return headNode;
+
 }
 
 template <typename LI>
-void LL<LI>::insertNode(int nodePos, int nodeNum){
+void LL<LI>::insertNode(int nodePos, Node<LI>* nodeValue){
 
-    LL<LI>* nodePtr;
-    LL<LI>* nn;
+    Node<LI>* nodePtr;
+    Node<LI>* nn;
 
-    nn = new Node<LI>();
-    nn->value = nodeNum;
+    nn = new Node<LI>;
+    nn->value = nodeValue->value;
 
     if(!headNode) {
 
@@ -287,23 +295,22 @@ void LL<LI>::insertNode(int nodePos, int nodeNum){
         }
     }
 
-
 }
 
 template<typename LI>
 void LL<LI>::insertionSort() {
-    LI key;
+    Node<LI>* key;
 
     for(int i = 0; i < getListLength() - 1; i++) {
         key = getNodeValue(i);
-        Node<LI> j = i-1;
+        int j = i-1;
 
         while (j >= 0 && getNodeValue(j) > key) {
             j = j-1;
         }
 
         //remove key where it is found and then insert the correct one.
-        removeNodeValue(key);
+        removeNode(key);
         insertNode(j+1, key);
     }
 

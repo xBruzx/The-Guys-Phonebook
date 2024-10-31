@@ -44,9 +44,12 @@ void addContact(LL<Contact>* contactList)
     newContact.setAddress(addAddress);
 
     cout << "What is the person's phone number (excluding area code, ideally in XXX-XXXX format)?\n";
+    getline(cin, addPhoneNum);
     newContact.setPhoneNum(addPhoneNum);
+
     cout << "What is the person's area code?\n";
     cin >> addAreaCode;
+    newContact.setAreaCode(addAreaCode);
     cin.ignore();
 
     contactList->addNewNode(newContact);
@@ -72,7 +75,8 @@ void removeContact(LL<Contact>* ptr) {
     }
 
     //call function
-    ptr->removeNode(userInput);
+    Node<Contact>* nodePackage = ptr->getNodeValue(userInput);
+    ptr->removeNode(nodePackage);
 
 }
 

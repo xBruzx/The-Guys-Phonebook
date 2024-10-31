@@ -71,7 +71,7 @@ int main()
                     break;
         }
         
-    } while (choice = 5);
+    } while (choice != 5);
     //terminate program
 
     printPhonebook(&contactList);
