@@ -17,6 +17,7 @@ int main()
 
     //placing contacts into the phonebook
     loadContacts("phonebook.txt", &contactList);
+    int tracker = contactList.getListLength();
 
     //sort phonebook in alphabetical order by last name
     contactList.insertionSort();
@@ -40,16 +41,24 @@ int main()
         //switch
         switch (choice)
         {
-            //iterate forward
+            //iterate forward.
             case 1:
-                    if (it >= (contactList.getListLength() - 1))
+                    it++;
+                    if (it == tracker - 1) {
+                        it = 0;
+                    }
+
+                    cout << contactList.getListLength() << endl;
+                    /*if (it >= (contactList.getListLength()))
                     {
                         it = 0;
                     }
                     else
                     {
                         it++;
-                    }
+                        contactList.printContact(it);
+                        cout << "Current itteration: " << it << endl;
+                    }*/
                     break;
 
             case 2:

@@ -77,7 +77,7 @@ class Contact
         }
         void setAreaCode(int areaCode)
         {
-            this->areaCode;
+            this->areaCode = areaCode;
         }
 
 

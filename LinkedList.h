@@ -22,11 +22,12 @@ template<typename N> class Node{
 };
 
 template<typename LI> class LL {
+    private:
     Node<LI>* headNode;
     Node<LI>* tailNode;
 
-    public:
 
+    public:
     LL() {
         //default constrctor for headNode.
         headNode = NULL;
@@ -162,18 +163,22 @@ void LL<LI>::addNewNode(LI value) {
 
 template <typename LI>
 int LL<LI>::getListLength() {
-    int counter = 0;
     Node<LI>* nodePtr;
-
     nodePtr = headNode;
+    int counter;
+
+    cout << "You got here" << endl;
 
     //go through the list of contacts and count each one to get the length of the Phonebook
-    while (!tailNode) {
-        counter ++;
+    while (nodePtr != tailNode) {
+        counter++;
         nodePtr = nodePtr->next;
+        cout << "JOE MAMA" << counter << endl;
         if (nodePtr == tailNode) {
             counter++;
         }
+        
+        break;
     }
 
     return counter;
@@ -183,15 +188,15 @@ int LL<LI>::getListLength() {
 template <typename LI>
 void LL<LI>::printContact(int it) {
 
-    Node<LI>* nodePackage = getNodeValue(it);
+    Node<LI>* nodePtr = headNode; //node ptr set to head of list.
+    Node<LI>* nodePackage = getNodeValue(it); 
 
+    //if the head is set to null then that means that the list is empty.
     if (headNode == NULL) {
-
         cout << "Phonebook is empty. Please consider adding contacts" << endl;
         return;
     }
 
-    Node<LI>* nodePtr = headNode;
 
     //Search the list for the contact passed through.
     while (nodePtr != NULL) {
@@ -199,8 +204,9 @@ void LL<LI>::printContact(int it) {
             cout << nodePackage->value << endl;
             return;
         }
-        
-        nodePtr = nodePtr->next;
+        else {
+            nodePtr = nodePtr->next;
+        }
     }
 }
 
