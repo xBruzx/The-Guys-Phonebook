@@ -59,19 +59,21 @@ void addContact(LL<Contact>* contactList)
 
 //removeContact
 void removeContact(LL<Contact>* ptr) {
-
-    int userInput;
+    int userInput = 0;
 
     //take user input
-    "\nWhat contact do you want to delete (enter a number that matches the node)?";
+    ptr->print();
+    cout << "\nWhat contact do you want to delete (enter a number that matches the node)?" << endl;
     cin >> userInput;
+    userInput--;
+    cin.ignore();
 
     //validate input
-    while (userInput < 0 || userInput >= ptr->getListLength())
+    if(userInput < 0 || userInput > ptr->getListLength())
     {
-        "\nNo contact at this point. Please enter a valid input.\n";
-        cin.ignore();
+        cout << "\nNo contact at this point. Please enter a valid input.\n" << endl;
         cin >> userInput;
+        cin.ignore();
     }
 
     //call function

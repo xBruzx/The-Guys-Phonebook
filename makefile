@@ -10,5 +10,3 @@ functions.o: functions.cpp LinkedList.h Contact.h
 .PHONY: clean
 clean:
 	rm *.o Prog2 driver.o  functions.o
-
-

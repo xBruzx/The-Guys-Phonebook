@@ -11,13 +11,15 @@ void removeContact(LL<Contact>*);
 int main() 
 {
     LL<Contact> contactList;
+
     int choice = 0;
-    int it = 1;
+    int it = 0;
 
 
     //placing contacts into the phonebook
     loadContacts("phonebook.txt", &contactList);
     int tracker = contactList.getListLength();
+    //contactList.insertionSort();
 
     //sort phonebook in alphabetical order by last name
     //contactList.insertionSort();
@@ -46,10 +48,9 @@ int main()
             case 1:
                     it++;
                     if (it == tracker) {
-                        it = 1;
+                        it = 0;
                     }
 
-                    cout << contactList.getListLength() << endl;
                     /*if (it >= (contactList.getListLength()))
                     {
                         it = 0;
@@ -72,6 +73,7 @@ int main()
             case 3:
         
                     //remove a contact
+                    cout << "We are removing a contact." << endl;
                     removeContact(&contactList);
                     break;
             

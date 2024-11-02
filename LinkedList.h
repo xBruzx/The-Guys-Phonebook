@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Contact.h"
 using namespace std;
 
 void addNewNode(int value);
@@ -84,7 +85,6 @@ template<typename LI> class LL {
 
 
         else {
-
             //make nodePtr head of the list.
             nodePtr = headNode;
 
@@ -96,11 +96,16 @@ template<typename LI> class LL {
                 nodePtr = nodePtr->next;
                 
             }
+            
+            previousNode->next = nodePtr->next;
+            delete nodePtr;
+            //headNode = nodePtr;
         }
     }
 
     void print() {
         Node<LI>* nodePtr = headNode;
+        int counter = 0;
 
         //Check if list is empty if the list is empty it will prompt the user to consider adding contacts to the phone book.
         if(nodePtr == NULL) {
@@ -110,8 +115,9 @@ template<typename LI> class LL {
         if (nodePtr != NULL) {
             //Go through the list as long as nodePtr is not equal to NULL.
             while (nodePtr != NULL) {
+                counter++;
                 //Outputs list of contacts
-                cout << nodePtr->value << endl;
+                cout << counter << " )" << nodePtr->value << endl;
                 //Move to next node.
                 nodePtr = nodePtr->next;
             }
@@ -167,18 +173,12 @@ int LL<LI>::getListLength() {
     Node<LI>* nodePtr;
     nodePtr = headNode;
 
-    cout << "You got here." << endl;
-
     //go through the list of contacts and count each one to get the length of the Phonebook
     while (nodePtr != NULL) {
         counter++;
         nodePtr = nodePtr->next;
-
-        cout << counter << endl;
-        cout << nodePtr->value << endl;
     }
 
-    cout << "You got before the return." << endl;
     return counter;
 }
 
@@ -222,26 +222,27 @@ Node<LI>* LL<LI>::getNodeValue(int pos) {
         //If we pass 0 then we just show the head value.
         if(pos == 0) {
             return headNode;
-    }
+        }
+
         nodePtr = headNode;
         int currentPos = 0; //temp value to keep track of where we are in the list.
         //loop through the list to find the position we passed through.
         while(pos >= currentPos && nodePtr != NULL) {
 
-        //If we find the position return the value of the nodePtr.
-        if(pos == currentPos) {
+            //If we find the position return the value of the nodePtr.
+            if(pos == currentPos) {
 
-            return nodePtr;
-        }
+                return nodePtr;
+            }
 
-        //if we do not find the position then we increment and check again.
-        currentPos++;
-        nodePtr = nodePtr->next;
+            //if we do not find the position then we increment and check again.
+            currentPos++;
+            nodePtr = nodePtr->next;
 
         }
     }
 
-    return headNode;
+    return nodePtr;
 
 }
 
@@ -295,65 +296,26 @@ void LL<LI>::insertNode(int nodePos, Node<LI>* nodeValue){
 
 }
 
-template<typename LI>
+/*template <typename LI>
 void LL<LI>::insertionSort() {
-    Node<LI>* key;
-    int j;
-
-    for (int i = 1; i < getListLength(); i++)
-    {
-        key = getNodeValue(i);
-        j = i - 1;
-
-        while (j >= 0 && getNodeValue(j)->value > key->value)
-        {
-            j = j - 1;
-        }
-    }
+	Node<LI>* key;
+	int j;
+	for(int i = 1; i < getListLength(); i++)
+	{
+		key = getNodeValue(i);
+		j = i-1;
+		while(j >= 0 && getNodeValue(j) > key)
+		{
+            cout << "We are here" << endl;
+			j = j-1;
+		}
+		//remove key where it is and then insert in correct position
+		removeNode(key);
+		insertNode(j+1, key);
+	}
 }
 
 
+We could not get this to work it would just cause endless loops.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-void LL<LI>::insertionSort() {
-    //cout << "\nYou reached the insertionSort() function!\n";
-    Node<LI>* key;
-    Node<LI>* arr;
-    int j;
-    int size = getListLength();
-
-    for(int i = 1; i < size; i++) {
-        key = getNodeValue(i);
-        j = i-1;
-
-        while (j >= 0 && getNodeValue(j) > key) {
-            arr[j+1] = arr[j];
-            j = j-1;
-        }
-
-        //Remove the key and then insert it to the correct part of the list.
-        removeNode(key);
-        insertNode(j+i, key);
-    }
-
-
-}
 */

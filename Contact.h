@@ -18,7 +18,7 @@ class Contact
         string phoneNum;
         int areaCode;
 
-    //methods
+    //methods :)
     public:
     
         //getters
