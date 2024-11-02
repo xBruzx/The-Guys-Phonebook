@@ -65,6 +65,7 @@ template<typename LI> class LL {
     void insertionSort();
 
     void removeNode(Node<LI>* nodePackage) {
+        //cout << "\nYou reached the removeNode() function!\n";
         Node<LI>* nodePtr; //To go through the list and and look for the value passed.
         Node<LI>* previousNode; //Pointer to the previous node
 
@@ -158,29 +159,26 @@ void LL<LI>::addNewNode(LI value) {
         tailNode = nn;
     }
 
-
 }
 
 template <typename LI>
 int LL<LI>::getListLength() {
+    int counter = 0;
     Node<LI>* nodePtr;
     nodePtr = headNode;
-    int counter;
 
-    cout << "You got here" << endl;
+    cout << "You got here." << endl;
 
     //go through the list of contacts and count each one to get the length of the Phonebook
-    while (nodePtr != tailNode) {
+    while (nodePtr != NULL) {
         counter++;
         nodePtr = nodePtr->next;
-        cout << "JOE MAMA" << counter << endl;
-        if (nodePtr == tailNode) {
-            counter++;
-        }
-        
-        break;
+
+        cout << counter << endl;
+        cout << nodePtr->value << endl;
     }
 
+    cout << "You got before the return." << endl;
     return counter;
 }
 
@@ -249,7 +247,7 @@ Node<LI>* LL<LI>::getNodeValue(int pos) {
 
 template <typename LI>
 void LL<LI>::insertNode(int nodePos, Node<LI>* nodeValue){
-
+    //cout << "\nYou reached the insertNode() function!\n";
     Node<LI>* nodePtr;
     Node<LI>* nn;
 
@@ -260,11 +258,11 @@ void LL<LI>::insertNode(int nodePos, Node<LI>* nodeValue){
 
         //If there is already a node at position zero we move on to another position. If there is not a node there currently we place it there.
         if(nodePos != 0) {
-            cout << "Unable to insert node at: " << nodePos << endl;
+            cout << "Unable to insert contact at position: " << nodePos << endl;
         }
 
         headNode = nn;
-        tailNode == nn;
+        tailNode = nn;
     }
     else {
         nodePtr = headNode; //set nodePtr to headNode
@@ -276,21 +274,15 @@ void LL<LI>::insertNode(int nodePos, Node<LI>* nodeValue){
         }
         else {
             //Keep searching the list until nodeCounter is reached
-            while(nodePtr != tailNode && nodeCounter < nodePos){
+            while(nodePtr != NULL && nodeCounter < nodePos){
                 nodeCounter++;
-
-                //if nodeCounter reaches nodePos, then break out of loop.
-                if (nodeCounter == nodePos) {
-                    break;
-                }
-
-                //insert node.
                 nodePtr = nodePtr->next;
 
             }
 
             //appending node to the end of the list.
-            if (nodePtr->next == NULL) {
+            if (nodePtr == tailNode) {
+                tailNode->next = nn;
                 tailNode = nn;
 
             }
@@ -306,19 +298,62 @@ void LL<LI>::insertNode(int nodePos, Node<LI>* nodeValue){
 template<typename LI>
 void LL<LI>::insertionSort() {
     Node<LI>* key;
+    int j;
 
-    for(int i = 0; i < getListLength() - 1; i++) {
+    for (int i = 1; i < getListLength(); i++)
+    {
         key = getNodeValue(i);
-        int j = i-1;
+        j = i - 1;
+
+        while (j >= 0 && getNodeValue(j)->value > key->value)
+        {
+            j = j - 1;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+void LL<LI>::insertionSort() {
+    //cout << "\nYou reached the insertionSort() function!\n";
+    Node<LI>* key;
+    Node<LI>* arr;
+    int j;
+    int size = getListLength();
+
+    for(int i = 1; i < size; i++) {
+        key = getNodeValue(i);
+        j = i-1;
 
         while (j >= 0 && getNodeValue(j) > key) {
+            arr[j+1] = arr[j];
             j = j-1;
         }
 
-        //remove key where it is found and then insert the correct one.
+        //Remove the key and then insert it to the correct part of the list.
         removeNode(key);
-        insertNode(j+1, key);
+        insertNode(j+i, key);
     }
 
 
 }
+*/

@@ -12,7 +12,7 @@ int main()
 {
     LL<Contact> contactList;
     int choice = 0;
-    int it = 0;
+    int it = 1;
 
 
     //placing contacts into the phonebook
@@ -20,9 +20,10 @@ int main()
     int tracker = contactList.getListLength();
 
     //sort phonebook in alphabetical order by last name
-    contactList.insertionSort();
+    //contactList.insertionSort();
     //loop to go through the program 
     do {
+
 
         contactList.printContact(it);
         printMenu();
@@ -44,8 +45,8 @@ int main()
             //iterate forward.
             case 1:
                     it++;
-                    if (it == tracker - 1) {
-                        it = 0;
+                    if (it == tracker) {
+                        it = 1;
                     }
 
                     cout << contactList.getListLength() << endl;
@@ -65,7 +66,7 @@ int main()
                     //add contact
                     addContact(&contactList);
                     //resort phonebook
-                    contactList.insertionSort();
+                    //contactList.insertionSort();
                     break;
 
             case 3:
